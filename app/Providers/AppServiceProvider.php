@@ -5,6 +5,9 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use App\Models\Ticket;
+use App\Policies\TicketPolicy;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,4 +28,9 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
     }
+
+    protected $policies = [
+    Ticket::class => TicketPolicy::class,
+];
+
 }

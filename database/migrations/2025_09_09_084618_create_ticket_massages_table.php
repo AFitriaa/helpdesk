@@ -6,25 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('ticket_massages', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('ticket_id')->constrained('tickets')->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained('users');
-            $table->text('body');
-            $table->json('attachments')->nullable();
-            $table->boolean('internal')->default(false);
-            $table->timestamps();
-        });
+        // Hanya buat tabel jika belum ada
+        if (!Schema::hasTable('ticket_massages')) {
+            Schema::create('ticket_massages', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('ticket_id')->constrained()->cascadeOnDelete();
+                $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+                $table->text('body');
+                $table->json('attachments')->nullable();
+                $table->boolean('internal')->default(false);
+                $table->timestamps();
+            });
+        }
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('ticket_massages');

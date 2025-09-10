@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('unit_id')->nullable()->constrained('units')->nullOnDelete();
             $table->enum('priority',['low','medium','high','urgent'])->default('medium');
             $table->enum('status',['open','assigned','in_progress','on_hold','closed','overdue'])->default('open');
-            $table->foreignId('created_by')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('created_by')->constrained('users')->onDelete('cascade');
             $table->foreignId('assigned_to')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamp('sla_due_at')->nullable();
             $table->json('attachments')->nullable();
@@ -36,3 +36,5 @@ return new class extends Migration
         Schema::dropIfExists('tickets');
     }
 };
+
+
